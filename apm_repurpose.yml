@@ -1,0 +1,37 @@
+# re-purpose APM
+
+- name: Set hostname
+  hostname:
+    name: {{ inventory_hostname }}
+
+- name: Configure DNS - BOS
+  nmcli:
+    conn: eth0
+    type: ethernet
+    dns4:
+      - 10.55.81.17
+      - 10.55.81.18
+    state: present
+    when: "{{ ansible_hostname.split(".")[2] | lower }}" == "bos"
+    
+- name: Configure DNS - FRA
+  nmcli:
+    conn: eth0
+    type: ethernet
+    dns4:
+      - 10.55.81.17
+      - 10.55.81.18
+    state: present
+    when: "{{ ansible_hostname.split(".")[2] | lower }}" == "fra"
+
+- name: Create /etc/hosts file
+  template:
+    src: hosts
+    dest: /etc/hosts
+    backup: yes
+    
+- name: Create /etc/resolv.conf
+  template:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    backup: yes

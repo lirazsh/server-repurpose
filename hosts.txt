@@ -1,0 +1,6 @@
+# Ansible generated /etc/hosts
+
+127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 	  localhost localhost.localdomain localhost4 localhost4.localdomain4
+{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} {{ ansible_hostname }} {{ ansible_hostname.split(".")[0] | lower }}
+
